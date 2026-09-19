@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilastro B — Il terzo pilastro premia la banca. Il tuo no.</title>
+<meta name="description" content="Pilastro B compra Bitcoin dal tuo stipendio, ogni mese, fino a CHF 1'000 senza KYC. Self-custody assistita. Rendita opzionale con covered call. Per bitcoiner in Svizzera.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141210; --panel:#1C1A17; --panel2:#211F1B; --line:#333028; --line2:#3D3A33;
+  --ink:#F5F3ED; --body:#C5C0B6; --muted:#8A8478; --dim:#5C5850;
+  --amber:#F7931A; --amber-dim:rgba(247,147,26,.12);
+  --mono:'Space Mono',monospace; --serif:'Lora',serif; --sans:'Inter',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--body);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(rgba(245,243,237,.028) 1px,transparent 1px);background-size:26px 26px}
+::selection{background:var(--amber);color:#141210}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1080px,calc(100% - 48px));margin-inline:auto}
+
+/* NAV */
+nav{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(20,18,16,.88);backdrop-filter:blur(10px);z-index:50}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--ink);letter-spacing:-.02em}
+.logo b{color:var(--amber);font-weight:600}
+.nav-links{display:flex;gap:28px;font-size:12.5px;color:var(--muted)}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{font-family:var(--mono);font-size:11.5px;font-weight:700;color:#141210;background:var(--amber);padding:9px 16px;border-radius:6px;letter-spacing:.04em}
+.nav-cta:hover{background:#ffab40}
+@media(max-width:760px){.nav-links{display:none}}
+
+/* HERO */
+.hero{padding:110px 0 90px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;margin-bottom:26px}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(42px,7vw,76px);line-height:1.02;letter-spacing:-.035em;color:var(--ink);max-width:14ch}
+h1 em{font-style:italic;color:var(--amber)}
+.lede{margin-top:30px;max-width:560px;font-size:17px;line-height:1.6;color:var(--body)}
+.lede strong{color:var(--ink);font-weight:600}
+.hero-stats{display:flex;gap:0;margin-top:56px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.hstat{flex:1;padding:22px 26px;border-right:1px solid var(--line)}
+.hstat:last-child{border-right:none}
+.hstat .n{font-family:var(--mono);font-weight:700;font-size:clamp(22px,3vw,32px);color:var(--ink)}
+.hstat .n span{color:var(--amber)}
+.hstat .l{font-size:12px;color:var(--muted);margin-top:6px}
+@media(max-width:760px){.hero-stats{flex-direction:column}.hstat{border-right:none;border-bottom:1px solid var(--line)}.hstat:last-child{border-bottom:none}}
+.cta-row{display:flex;gap:14px;margin-top:44px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:13px;font-weight:700;padding:15px 26px;border-radius:7px;letter-spacing:.03em;display:inline-block}
+.btn-p{background:var(--amber);color:#141210}
+.btn-p:hover{background:#ffab40}
+.btn-s{border:1px solid var(--line2);color:var(--ink)}
+.btn-s:hover{border-color:var(--amber);color:var(--amber)}
+
+/* SECTIONS */
+section{padding:90px 0;border-bottom:1px solid var(--line)}
+.sec-tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:18px}
+h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,42px);line-height:1.12;letter-spacing:-.02em;color:var(--ink);max-width:22ch;margin-bottom:20px}
+.sec-lede{max-width:600px;font-size:15.5px;color:var(--body)}
+.sec-lede strong{color:var(--ink)}
+
+/* NUMBERS TABLE */
+.numtable{margin-top:48px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.numtable table{width:100%;border-collapse:collapse;font-size:14px}
+.numtable th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:16px 22px;border-bottom:1px solid var(--line);font-weight:400}
+.numtable td{padding:16px 22px;border-bottom:1px solid var(--line);color:var(--body)}
+.numtable tr:last-child td{border-bottom:none}
+.numtable td.v{font-family:var(--mono);color:var(--ink)}
+.numtable td.win{font-family:var(--mono);color:var(--amber);font-weight:700}
+.numtable .rowlabel{color:var(--ink);font-weight:500}
+.num-note{font-size:12.5px;color:var(--dim);margin-top:14px;font-family:var(--mono)}
+
+/* CALCULATOR */
+.calc{margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+@media(max-width:860px){.calc{grid-template-columns:1fr}}
+.calc-in{padding:34px;border-right:1px solid var(--line)}
+.calc-out{padding:34px;background:var(--panel2);display:flex;flex-direction:column;gap:22px;justify-content:center}
+@media(max-width:860px){.calc-in{border-right:none;border-bottom:1px solid var(--line)}}
+.slider-block{margin-bottom:26px}
+.slider-block label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.slider-block label output{font-family:var(--mono);color:var(--ink);font-weight:700}
+input[type=range]{width:100%;-webkit-appearance:none;height:2px;background:var(--line2);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--amber);cursor:pointer;border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber)}
+.result-row{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px}
+.result-row:last-child{border-bottom:none;padding-bottom:0}
+.result-row .rl{font-size:13px;color:var(--muted)}
+.result-row .rv{font-family:var(--mono);font-weight:700;font-size:24px;color:var(--ink)}
+.result-row .rv.amber{color:var(--amber)}
+.verdict{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink);line-height:1.4}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:48px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{background:var(--panel);padding:32px}
+.step .num{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.1em;margin-bottom:16px}
+.step h3{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--ink);margin-bottom:10px}
+.step p{font-size:14px;color:var(--body)}
+.step p strong{color:var(--ink)}
+
+/* CUSTODY SPLIT */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+@media(max-width:760px){.split{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:32px}
+.card h3{font-family:var(--serif);font-size:19px;color:var(--ink);margin-bottom:12px}
+.card ul{list-style:none;margin-top:14px}
+.card li{font-size:14px;padding:9px 0 9px 22px;position:relative;border-bottom:1px solid var(--line)}
+.card li:last-child{border-bottom:none}
+.card li::before{content:"—";position:absolute;left:0;color:var(--amber)}
+.card .tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--amber-dim);border:1px solid rgba(247,147,26,.3);padding:4px 10px;border-radius:99px;margin-bottom:16px}
+
+/* CTA */
+.final{padding:110px 0;text-align:center}
+.final h2{margin-inline:auto;max-width:20ch}
+.waitlist{margin:40px auto 0;display:flex;max-width:460px;border:1px solid var(--line2);border-radius:8px;overflow:hidden;background:var(--panel)}
+.waitlist input{flex:1;background:transparent;border:none;outline:none;color:var(--ink);font-family:var(--mono);font-size:13px;padding:16px 18px}
+.waitlist input::placeholder{color:var(--dim)}
+.waitlist button{background:var(--amber);color:#141210;border:none;font-family:var(--mono);font-weight:700;font-size:13px;padding:0 24px;cursor:pointer}
+.waitlist button:hover{background:#ffab40}
+.wl-note{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:16px}
+.wl-done{display:none;font-family:var(--mono);font-size:13px;color:var(--amber);margin-top:16px}
+
+footer{padding:40px 0 60px;font-size:12px;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer .disc{max-width:640px;line-height:1.7}
+
+.fade{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.fade.on{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#">Pilastro<b>B</b></a>
+    <div class="nav-links">
+      <a href="#numeri">I numeri</a>
+      <a href="#calcola">Calcola</a>
+      <a href="#come">Come funziona</a>
+      <a href="#custodia">Custodia</a>
+    </div>
+    <a class="nav-cta" href="#iscriviti">LISTA D'ATTESA</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow fade">Svizzera · Solo Bitcoin · No KYC fino a CHF 1'000/mese</p>
+    <h1 class="fade">Il terzo pilastro premia la banca. <em>Il tuo premia te.</em></h1>
+    <p class="lede fade">Il 3a ti dà uno sconto fiscale del 30% e in cambio blocca i tuoi soldi in franchi fino ai 60 anni. Se Bitcoin rende più dell'<strong>8% l'anno</strong>, quel vantaggio sparisce. Pilastro B compra Bitcoin dal tuo stipendio, ogni mese, e li mette <strong>sotto le tue chiavi</strong>.</p>
+    <div class="cta-row fade">
+      <a class="btn btn-p" href="#iscriviti">Entra in lista d'attesa</a>
+      <a class="btn btn-s" href="#numeri">Guarda i numeri</a>
+    </div>
+    <div class="hero-stats fade">
+      <div class="hstat"><div class="n"><span>~8%</span>/anno</div><div class="l">Breakeven: sopra questo rendimento, il 3a perde</div></div>
+      <div class="hstat"><div class="n">CHF <span>1'000</span></div><div class="l">Acquisto mensile massimo senza KYC, niente VASP</div></div>
+      <div class="hstat"><div class="n"><span>0%</span></div><div class="l">Imposta sulle plusvalenze private in Svizzera</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="numeri">
+  <div class="wrap">
+    <p class="sec-tag fade">01 — I numeri</p>
+    <h2 class="fade">Lo sconto fiscale è vero. È anche piccolo.</h2>
+    <p class="sec-lede fade">Versare CHF 7'258 nel 3a ti fa risparmiare ~CHF 2'200 di imposte subito. Ma dentro il 3a i soldi rendono il 5-6% e restano bloccati. Fuori, lo stesso denaro compra Bitcoin. Su 15 anni il divario non si racconta: <strong>si calcola</strong>.</p>
+    <div class="numtable fade">
+      <table>
+        <tr><th>Strategia</th><th>Versato oggi</th><th>Tra 15 anni</th><th>Liquidità</th></tr>
+        <tr><td class="rowlabel">3a azionario aggressivo (~6%/anno)</td><td class="v">CHF 7'258 pre-tax</td><td class="v">~CHF 16'300 netti</td><td>Bloccata fino a 59-60 anni</td></tr>
+        <tr><td class="rowlabel">Bitcoin, tesi prudente (10%/anno)</td><td class="v">CHF 5'080 post-tax</td><td class="v">~CHF 21'200, esenti</td><td>Sempre tua</td></tr>
+        <tr><td class="rowlabel">Bitcoin, tesi base (15%/anno)</td><td class="v">CHF 5'080 post-tax</td><td class="win">~CHF 41'300, esenti</td><td>Sempre tua</td></tr>
+        <tr><td class="rowlabel">Bitcoin, tesi bull (20%/anno)</td><td class="v">CHF 5'080 post-tax</td><td class="win">~CHF 78'200, esenti</td><td>Sempre tua</td></tr>
+      </table>
+    </div>
+    <p class="num-note fade">// Versamento unico di riferimento, aliquota marginale 30%, imposta d'uscita 3a ~6.5%. Le plusvalenze private su Bitcoin sono esenti in Svizzera.</p>
+  </div>
+</section>
+
+<section id="calcola">
+  <div class="wrap">
+    <p class="sec-tag fade">02 — Fai i tuoi conti</p>
+    <h2 class="fade">Non fidarti di noi. Muovi gli slider.</h2>
+    <p class="sec-lede fade">Stesso sforzo mensile, due destinazioni. Il 3a parte avvantaggiato perché investe soldi <strong>pre-tax</strong>. Bitcoin risponde col rendimento e con l'esenzione sulle plusvalenze.</p>
+    <div class="calc fade">
+      <div class="calc-in">
+        <div class="slider-block">
+          <label>Costo mensile in busta paga <output id="oAmt">CHF 600</output></label>
+          <input type="range" id="rAmt" min="100" max="1000" step="50" value="600">
+        </div>
+        <div class="slider-block">
+          <label>Rendimento annuo Bitcoin <output id="oBtc">15%</output></label>
+          <input type="range" id="rBtc" min="0" max="40" step="1" value="15">
+        </div>
+        <div class="slider-block">
+          <label>Orizzonte <output id="oYrs">15 anni</output></label>
+          <input type="range" id="rYrs" min="5" max="25" step="1" value="15">
+        </div>
+        <div class="slider-block" style="margin-bottom:0">
+          <label>Tua aliquota marginale <output id="oTax">30%</output></label>
+          <input type="range" id="rTax" min="20" max="42" step="1" value="30">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="result-row"><span class="rl">3a (azionario, 6%/anno, tassato all'uscita)</span><span class="rv" id="res3a">—</span></div>
+        <div class="result-row"><span class="rl">Pilastro B (Bitcoin post-tax, plusvalenze esenti)</span><span class="rv amber" id="resBtc">—</span></div>
+        <p class="verdict" id="resVerdict">—</p>
+      </div>
+    </div>
+    <p class="num-note fade">// Il 3a è limitato a CHF 7'258/anno (CHF 604.8/mese). Oltre quel tetto, tutto va comunque fuori. Rendimento 3a ipotizzato 6% lordo, imposta d'uscita 6.5%.</p>
+  </div>
+</section>
+
+<section id="come">
+  <div class="wrap">
+    <p class="sec-tag fade">03 — Come funziona</p>
+    <h2 class="fade">Quattro passi. Poi non ci pensi più.</h2>
+    <div class="steps fade">
+      <div class="step">
+        <p class="num">PASSO 01</p>
+        <h3>Lo stipendio alimenta lo stack</h3>
+        <p>Imposti l'importo una volta. Ogni mese, lo stesso giorno, compriamo Bitcoin per te. <strong>Fino a CHF 1'000 al mese senza KYC</strong>: sotto la soglia LBA, niente VASP, niente dossier.</p>
+      </div>
+      <div class="step">
+        <p class="num">PASSO 02</p>
+        <h3>Prezzo medio, zero timing</h3>
+        <p>Compri nel massimo e compri nel minimo. La media lavora per te. Nessuna app da aprire, nessun grafico da guardare, <strong>nessuna decisione emotiva</strong>.</p>
+      </div>
+      <div class="step">
+        <p class="num">PASSO 03</p>
+        <h3>Diretti in self-custody</h3>
+        <p>I Bitcoin arrivano sul <strong>tuo</strong> indirizzo, non sul nostro conto. Ti aiutiamo a configurare il wallet la prima volta. Dopo, le chiavi restano tue per sempre.</p>
+      </div>
+      <div class="step">
+        <p class="num">PASSO 04 — OPZIONALE</p>
+        <h3>Rendita con covered call</h3>
+        <p>Sul 20% dello stack puoi attivare covered call settimanali con strike lontani. <strong>Raccolti premi, non vendi la tesi</strong>. Lo yield è tassato come reddito: te lo diciamo noi come dichiararlo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="custodia">
+  <div class="wrap">
+    <p class="sec-tag fade">04 — Custodia</p>
+    <h2 class="fade">Le chiavi sono il prodotto.</h2>
+    <div class="split fade">
+      <div class="card">
+        <span class="tag">Default</span>
+        <h3>Self-custody assistita</h3>
+        <ul>
+          <li>Setup guidato del tuo hardware wallet, una volta sola</li>
+          <li>Acquisti inviati direttamente al tuo indirizzo</li>
+          <li>Noi non deteniamo mai i tuoi Bitcoin. Mai.</li>
+          <li>Piano di successione documentato per la tua famiglia</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">Per le covered call</span>
+        <h3>Sleeve operativa segregata</h3>
+        <ul>
+          <li>Solo il 20% dello stack, solo se lo attivi tu</li>
+          <li>Conto segregato a tuo nome presso controparte regolamentata svizzera</li>
+          <li>Strike lontani, scadenze corte, report mensile fiscale pronto</li>
+          <li>Disattivi quando vuoi, i Bitcoin tornano in self-custody</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="iscriviti" style="border-bottom:none">
+  <div class="wrap">
+    <p class="sec-tag fade">05 — Lancio</p>
+    <h2 class="fade">Il 3a aspetta i 60 anni. Tu no.</h2>
+    <p class="sec-lede fade" style="margin-inline:auto">Apriamo le prime 500 posizioni a inizio 2027, Ticino prima, poi tutta la Svizzera. Lascia la tua email: il posto è tuo.</p>
+    <form class="waitlist fade" id="wlForm">
+      <input type="email" id="wlEmail" placeholder="tua@email.ch" required>
+      <button type="submit">ISCRIVIMI</button>
+    </form>
+    <p class="wl-done" id="wlDone">// Ricevuto. Ti scriviamo all'apertura.</p>
+    <p class="wl-note fade">Niente spam. Una mail quando apriamo, una se cambia la legge.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="disc">Pilastro B non è un VASP, non detiene fondi di clienti e opera sotto la soglia di CHF 1'000 della LBA svizzera. Lo yield da covered call è reddito imponibile; le plusvalenze private su Bitcoin sono esenti. Questa pagina non è consulenza finanziaria o fiscale: è aritmetica.</p>
+    <p>© 2026 Pilastro B — Lugano, Svizzera</p>
+  </div>
+</footer>
+
+<script>
+// fade-in on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')}),{threshold:.12});
+document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+
+// calculator
+const r3a=0.06, exit3a=0.065, cap3a=604.8;
+const fmt=n=>'CHF '+Math.round(n).toLocaleString('it-CH');
+function fv(pmt,annual,years){const i=annual/12,n=years*12;if(i===0)return pmt*n;return pmt*((Math.pow(1+i,n)-1)/i)*(1+i);}
+function calc(){
+  const amt=+rAmt.value, btc=+rBtc.value/100, yrs=+rYrs.value, tax=+rTax.value/100;
+  // 3a: same net cost buys more pre-tax, capped
+  const gross=amt/(1-tax);
+  const pmt3=Math.min(gross,cap3a);
+  const v3=fv(pmt3,r3a,yrs)*(1-exit3a);
+  // spillover above the cap goes post-tax into BTC anyway
+  const spill=Math.max(0,amt-(cap3a*(1-tax)));
+  const vB=fv(amt,btc,yrs);                 // Pilastro B: full net amount into BTC
+  const v3total=v3+fv(spill,btc,yrs);       // fair: 3a + spill invested in BTC too
+  oAmt.textContent='CHF '+amt;
+  oBtc.textContent=rBtc.value+'%';
+  oYrs.textContent=yrs+' anni';
+  oTax.textContent=rTax.value+'%';
+  res3a.textContent=fmt(v3total);
+  resBtc.textContent=fmt(vB);
+  const diff=vB-v3total;
+  resVerdict.textContent = diff>0
+    ? 'Pilastro B vince di '+fmt(diff)+'. Il 3a ti costa quella cifra.'
+    : 'A questi rendimenti il 3a regge. Il tuo toro non è abbastanza toro.';
+}
+['rAmt','rBtc','rYrs','rTax'].forEach(id=>window[id].addEventListener('input',calc));
+calc();
+
+// waitlist (static demo)
+wlForm.addEventListener('submit',e=>{e.preventDefault();wlForm.style.display='none';wlDone.style.display='block';});
+</script>
+</body>
+</html>
