@@ -690,9 +690,25 @@ ticker(); setInterval(ticker,60000);
 let priceCache={};
 async function getPrices(days){
   if(priceCache[days])return priceCache[days];
-  const r=await fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=chf&days='+days+'&interval=daily');
-  const j=await r.json();
-  priceCache[days]=j.prices; return j.prices;
+  let prices=null;
+  try{
+    const r=await fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=chf&days='+days+'&interval=daily');
+    if(r.ok){ const j=await r.json(); if(j.prices&&j.prices.length)prices=j.prices; }
+  }catch(e){}
+  if(!prices){
+    // fallback: Kraken XBTCHF daily OHLC (no key)
+    prices=[]; let since=Math.floor(Date.now()/1000)-days*86400;
+    for(let k=0;k<5;k++){
+      const r=await fetch('https://api.kraken.com/0/public/OHLC?pair=XBTCHF&interval=1440&since='+since);
+      const j=await r.json();
+      const arr=j.result&&j.result.XBTCHF; if(!arr||!arr.length)break;
+      for(const c of arr)prices.push([c[0]*1000,parseFloat(c[4])]);
+      since=arr[arr.length-1][0]+86400;
+      if(arr.length<700)break;
+    }
+    if(!prices.length)throw new Error('no prices');
+  }
+  priceCache[days]=prices; return prices;
 }
 async function sim(){
   const amt=+document.getElementById('rSimAmt').value;
