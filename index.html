@@ -121,6 +121,36 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .card li::before{content:"—";position:absolute;left:0;color:var(--amber)}
 .tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--amber-dim);border:1px solid rgba(247,147,26,.35);padding:4px 10px;border-radius:99px;margin-bottom:14px}
 
+
+/* PRICE TICKER */
+.tick{font-family:var(--mono);font-size:12px;color:var(--sage);white-space:nowrap}
+.tick b{color:var(--ink)}
+@media(max-width:820px){.tick{display:none}}
+/* SIMULATOR */
+.sim{margin-top:44px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.sim-head{padding:28px 32px;border-bottom:1px solid var(--line);display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+.sim-head .sh-l{flex:1;min-width:240px}
+.sim-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.sim-cell{padding:24px 26px;border-right:1px solid var(--line)}
+.sim-cell:last-child{border-right:none}
+.sim-cell .n{font-family:var(--mono);font-weight:700;font-size:clamp(17px,2vw,23px);color:var(--ink)}
+.sim-cell .n.up{color:var(--sage)} .sim-cell .n.dn{color:#D98F6A}
+.sim-cell .l{font-size:11.5px;color:var(--muted);margin-top:6px}
+@media(max-width:760px){.sim-grid{grid-template-columns:1fr 1fr}.sim-cell{border-bottom:1px solid var(--line)}}
+.sim-src{font-size:11px;color:var(--dim);font-family:var(--mono);padding:12px 32px;border-top:1px solid var(--line)}
+/* WHY CARDS */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px}
+@media(max-width:760px){.why{grid-template-columns:1fr}}
+.why .card h3{font-size:17px}
+/* FAQ */
+.faq{margin-top:44px;border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{width:100%;background:none;border:none;color:var(--ink);font-family:var(--serif);font-size:17px;font-weight:600;text-align:left;padding:22px 34px 22px 0;cursor:pointer;position:relative}
+.faq-q::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-family:var(--mono);color:var(--amber);font-size:20px}
+.faq-item.open .faq-q::after{content:"–"}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--body);font-size:14px}
+.faq-a p{padding:0 0 22px;max-width:680px}
+
 /* CTA */
 .final{padding:100px 0;text-align:center}
 .final h2{margin-inline:auto}
@@ -145,6 +175,7 @@ footer .disc{max-width:640px;line-height:1.7}
 <nav>
   <div class="wrap">
     <a class="logo" href="#">Pilastro<b>B</b></a>
+    <span class="tick" id="tick"></span>
     <div class="nav-links">
       <a href="#curva" data-i18n="nav.curve"></a>
       <a href="#come" data-i18n="nav.how"></a>
@@ -218,6 +249,47 @@ footer .disc{max-width:640px;line-height:1.7}
       </div>
     </div>
     <p class="num-note fade" data-i18n="curve.note"></p>
+  </div>
+</section>
+
+
+<section id="storico">
+  <div class="wrap">
+    <p class="sec-tag fade" data-i18n="sim.tag"></p>
+    <h2 class="fade" data-i18n="sim.h2"></h2>
+    <p class="sec-lede fade" data-i18n-html="sim.lede"></p>
+    <div class="sim fade">
+      <div class="sim-head">
+        <div class="sh-l slider-block" style="margin-bottom:0">
+          <label><span data-i18n="sim.amt"></span><output id="oSimAmt"></output></label>
+          <input type="range" id="rSimAmt" min="50" max="1000" step="50" value="200">
+        </div>
+        <div class="sh-l slider-block" style="margin-bottom:0">
+          <label><span data-i18n="sim.start"></span><output></output></label>
+          <input type="range" id="rSimStart" min="1" max="8" step="1" value="4">
+        </div>
+      </div>
+      <div class="sim-grid">
+        <div class="sim-cell"><div class="n" id="simSats">—</div><div class="l" data-i18n="sim.sats"></div></div>
+        <div class="sim-cell"><div class="n" id="simVal">—</div><div class="l" data-i18n="sim.val"></div></div>
+        <div class="sim-cell"><div class="n" id="simInv">—</div><div class="l" data-i18n="sim.inv"></div></div>
+        <div class="sim-cell"><div class="n" id="simPL">—</div><div class="l" data-i18n="sim.pl"></div></div>
+      </div>
+      <p class="sim-src" id="simSrc"></p>
+    </div>
+    <div class="why fade">
+      <div class="card"><h3 data-i18n="why.c1t"></h3><p data-i18n="why.c1p"></p></div>
+      <div class="card"><h3 data-i18n="why.c2t"></h3><p data-i18n="why.c2p"></p></div>
+      <div class="card"><h3 data-i18n="why.c3t"></h3><p data-i18n="why.c3p"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="sec-tag fade" data-i18n="faq.tag"></p>
+    <h2 class="fade" data-i18n="faq.h2"></h2>
+    <div class="faq fade" id="faqList"></div>
   </div>
 </section>
 
@@ -306,20 +378,26 @@ it:{
  'curve.note':"// Il 3a è limitato a CHF 7'258/anno (CHF 604.8/mese): l'eccedenza va comunque fuori. La curva include anche lo scenario -50% di drawdown nei primi 3 anni.",
  'calc.amt':'Costo mensile in busta paga','calc.btc':'Rendimento annuo Bitcoin','calc.yrs':'Orizzonte','calc.tax':'Tua aliquota marginale',
  'calc.res3a':'3a, tassato all\'uscita','calc.resB':'Pilastro B, esente',
- 'how.tag':'02 — Come funziona','how.h2':'Quattro passi. Poi non ci pensi più.',
+ 'sim.tag':'02 — La prova','sim.h2':'E se avessi iniziato prima?','sim.lede':"Simulazione su <strong>dati storici reali</strong>: quanto varrebbe oggi un piano di accumulo mensile iniziato anni fa. La volatilità non è il nemico del piano: è il suo motore.",
+ 'sim.amt':'Importo mensile (CHF)','sim.start':'Anni fa','sim.sats':'Bitcoin accumulati','sim.val':'Valore oggi','sim.inv':'Totale versato','sim.pl':'Risultato',
+ 'why.c1t':"La media batte il tempismo",'why.c1p':"Comprare a intervalli fissi media il prezzo nel tempo. Non serve il momento perfetto: serve il ritmo.",
+ 'why.c2t':'La volatilità lavora per te','why.c2p':"Con importi fissi compri più Bitcoin quando il prezzo scende e meno quando sale. I ribassi diventano sconti.",
+ 'why.c3t':'Zero stress da grafico','why.c3p':"Niente app da controllare ogni giorno. Il piano gira, tu vivi. Lo stack cresce in sottofondo.",
+ 'faq.tag':'04 — Domande','faq.h2':'Quello che chiedono tutti.',
+ 'how.tag':'03 — Come funziona','how.h2':'Quattro passi. Poi non ci pensi più.',
  'how.s1n':'PASSO 01','how.s1t':'Lo stipendio alimenta lo stack','how.s1p':"Imposti l'importo una volta. Ogni mese, lo stesso giorno, compri Bitcoin. <strong>Zero timing, zero decisioni emotive.</strong>",
  'how.s2n':'PASSO 02','how.s2t':'Privacy by design','how.s2p':"Sotto CHF 1'000 al mese la legge svizzera non ci obbliga a identificarti. <strong>Nessun dato condiviso con exchange di terze parti</strong>, nessun dossier su di te.",
  'how.s3n':'PASSO 03','how.s3t':'Diretti in self-custody','how.s3p':"I Bitcoin arrivano sul <strong>tuo</strong> indirizzo. Ti aiutiamo a configurare il wallet la prima volta. Dopo, le chiavi restano tue per sempre.",
  'how.s4n':'PASSO 04 — OPZIONALE','how.s4t':'Rendita con covered call','how.s4p':"Sul 20% dello stack puoi attivare covered call con strike lontani. <strong>Raccolti premi, non vendi la tesi.</strong> Lo yield è tassato come reddito: ti prepariamo il report fiscale.",
- 'priv.tag':'03 — Privacy','priv.h3':"I tuoi dati non esistono. Non possono perderli.",
+ 'priv.tag':'05 — Privacy','priv.h3':"I tuoi dati non esistono. Non possono perderli.",
  'priv.p':"Ogni exchange centralizzato è un archivio dei tuoi acquisti, dei tuoi indirizzi, dei tuoi documenti. Pilastro B è costruito per non avere nulla da archiviare: sotto CHF 1'000 al mese <strong>non raccogliamo documenti, non profiliamo, non abbiamo nulla da condividere</strong> con terze parti. Non è un trucco fiscale: le tasse le dichiari tu, come sempre. È igiene dei dati.",
  'priv.b1':'Nessun documento caricato','priv.b2':'Nessun dato venduto o condiviso','priv.b3':'Conforme alla legge svizzera',
- 'cust.tag':'04 — Custodia','cust.h2':'Le chiavi sono il prodotto.',
+ 'cust.tag':'06 — Custodia','cust.h2':'Le chiavi sono il prodotto.',
  'cust.c1tag':'Default','cust.c1t':'Self-custody assistita',
  'cust.c1l1':'Setup guidato del tuo hardware wallet, una volta sola','cust.c1l2':'Acquisti inviati direttamente al tuo indirizzo','cust.c1l3':'Noi non deteniamo mai i tuoi Bitcoin. Mai.','cust.c1l4':'Piano di successione documentato per la tua famiglia',
  'cust.c2tag':'Per le covered call','cust.c2t':'Sleeve operativa segregata',
  'cust.c2l1':'Solo il 20% dello stack, solo se lo attivi tu','cust.c2l2':'Conto segregato a tuo nome presso controparte regolamentata svizzera','cust.c2l3':'Strike lontani, scadenze corte, report fiscale mensile','cust.c2l4':'Disattivi quando vuoi, tutto torna in self-custody',
- 'fin.tag':'05 — Lancio','fin.h2':'Il 3a aspetta i 60 anni. Tu no.',
+ 'fin.tag':'07 — Lancio','fin.h2':'Il 3a aspetta i 60 anni. Tu no.',
  'fin.lede':"Apriamo le prime 500 posizioni a inizio 2027, Ticino prima, poi tutta la Svizzera. Lascia la tua email: il posto è tuo.",
  'fin.ph':'tua@email.ch','fin.btn':'ISCRIVIMI','fin.done':'// Ricevuto. Ti scriviamo all\'apertura.','fin.note':"Niente spam. Una mail quando apriamo, una se cambia la legge.",
  'foot.disc':"Pilastro B dichiara tutto alla legge svizzera e niente a terze parti che non c'entrano. Lo yield da covered call è reddito imponibile; le plusvalenze private su Bitcoin sono esenti. Questa pagina non è consulenza finanziaria o fiscale: è aritmetica. Bitcoin è volatile: investi solo ciò che puoi vedere scendere del 50% senza vendere.",
@@ -340,20 +418,26 @@ de:{
  'curve.note':"// Die 3a ist auf CHF 7'258/Jahr begrenzt (CHF 604.8/Monat): Der Überschuss fliesst sowieso nach draussen. Die Kurve enthält ein -50%-Drawdown-Szenario in den ersten 3 Jahren.",
  'calc.amt':'Monatliche Kosten im Lohn','calc.btc':'Bitcoin-Rendite pro Jahr','calc.yrs':'Horizont','calc.tax':'Dein Grenzsteuersatz',
  'calc.res3a':'Säule 3a, besteuert bei Bezug','calc.resB':'Pilastro B, steuerfrei',
- 'how.tag':'02 — So funktioniert es','how.h2':'Vier Schritte. Dann Ruhe.',
+ 'sim.tag':'02 — Der Beweis','sim.h2':'Was wäre, wenn du früher begonnen hättest?','sim.lede':"Simulation auf <strong>echten historischen Daten</strong>: Was wäre ein vor Jahren gestarteter monatlicher Sparplan heute wert? Volatilität ist nicht der Feind des Plans: Sie ist sein Motor.",
+ 'sim.amt':'Monatlicher Betrag (CHF)','sim.start':'Jahre zurück','sim.sats':'Akkumulierte Bitcoin','sim.val':'Wert heute','sim.inv':'Total einbezahlt','sim.pl':'Ergebnis',
+ 'why.c1t':'Der Durchschnitt schlägt das Timing','why.c1p':'Regelmässige Käufe mitteln den Preis über die Zeit. Der perfekte Moment ist unnötig: Der Rhythmus zählt.',
+ 'why.c2t':'Volatilität arbeitet für dich','why.c2p':'Mit festen Beträgen kaufst du mehr Bitcoin, wenn der Preis fällt, und weniger, wenn er steigt. Rücksetzer werden zu Rabatten.',
+ 'why.c3t':'Kein Chart-Stress','why.c3p':'Keine App, die du täglich checkst. Der Plan läuft, du lebst. Der Stack wächst im Hintergrund.',
+ 'faq.tag':'04 — Fragen','faq.h2':'Was alle fragen.',
+ 'how.tag':'03 — So funktioniert es','how.h2':'Vier Schritte. Dann Ruhe.',
  'how.s1n':'SCHRITT 01','how.s1t':'Der Lohn füttert den Stack','how.s1p':"Betrag einmal festlegen. Jeden Monat, am selben Tag, kaufen wir Bitcoin. <strong>Kein Timing, keine Emotionen.</strong>",
  'how.s2n':'SCHRITT 02','how.s2t':'Privacy by Design','how.s2p':"Unter CHF 1'000 pro Monat verpflichtet uns das Schweizer Gesetz nicht zur Identifikation. <strong>Keine Daten an Drittbörsen</strong>, kein Dossier über dich.",
  'how.s3n':'SCHRITT 03','how.s3t':'Direkt in Self-Custody','how.s3p':"Die Bitcoin gehen auf <strong>deine</strong> Adresse. Wir helfen beim ersten Wallet-Setup. Danach bleiben die Schlüssel für immer deine.",
  'how.s4n':'SCHRITT 04 — OPTIONAL','how.s4t':'Ertrag mit Covered Calls','how.s4p':"Auf 20% des Stacks kannst du Covered Calls mit fernen Strikes aktivieren. <strong>Du kassierst Prämien, verkaufst die These nicht.</strong> Der Ertrag ist steuerpflichtig: Wir liefern den Steuerreport.",
- 'priv.tag':'03 — Privatsphäre','priv.h3':'Deine Daten existieren nicht. Niemand kann sie verlieren.',
+ 'priv.tag':'05 — Privatsphäre','priv.h3':'Deine Daten existieren nicht. Niemand kann sie verlieren.',
  'priv.p':"Jede zentrale Börse ist ein Archiv deiner Käufe, Adressen und Dokumente. Pilastro B ist so gebaut, dass es nichts zu archivieren gibt: Unter CHF 1'000 pro Monat <strong>sammeln wir keine Dokumente, erstellen keine Profile, haben nichts zu teilen</strong>. Kein Steuertrick: Deine Steuern deklarierst du wie immer selbst. Es ist Datenhygiene.",
  'priv.b1':'Keine Dokumente hochgeladen','priv.b2':'Keine Daten verkauft oder geteilt','priv.b3':'Konform mit Schweizer Recht',
- 'cust.tag':'04 — Verwahrung','cust.h2':'Die Schlüssel sind das Produkt.',
+ 'cust.tag':'06 — Verwahrung','cust.h2':'Die Schlüssel sind das Produkt.',
  'cust.c1tag':'Standard','cust.c1t':'Assistierte Self-Custody',
  'cust.c1l1':'Geführtes Hardware-Wallet-Setup, einmalig','cust.c1l2':'Käufe direkt auf deine Adresse','cust.c1l3':'Wir halten niemals deine Bitcoin. Nie.','cust.c1l4':'Dokumentierter Nachfolgeplan für deine Familie',
  'cust.c2tag':'Für Covered Calls','cust.c2t':'Segregierte operative Sleeve',
  'cust.c2l1':'Nur 20% des Stacks, nur wenn du aktivierst','cust.c2l2':'Segregiertes Konto auf deinen Namen bei regulierter Schweizer Gegenpartei','cust.c2l3':'Ferne Strikes, kurze Laufzeiten, monatlicher Steuerreport','cust.c2l4':'Jederzeit deaktivierbar, alles zurück in Self-Custody',
- 'fin.tag':'05 — Launch','fin.h2':'Die 3a wartet auf die 60. Du nicht.',
+ 'fin.tag':'07 — Launch','fin.h2':'Die 3a wartet auf die 60. Du nicht.',
  'fin.lede':'Wir eröffnen die ersten 500 Plätze Anfang 2027, Tessin zuerst, dann die ganze Schweiz. Hinterlasse deine E-Mail: Der Platz gehört dir.',
  'fin.ph':'deine@email.ch','fin.btn':'ANMELDEN','fin.done':'// Erhalten. Wir schreiben zur Eröffnung.','fin.note':'Kein Spam. Eine Mail beim Start, eine bei Gesetzesänderungen.',
  'foot.disc':'Pilastro B deklariert alles gegenüber dem Schweizer Gesetz und nichts gegenüber Dritten, die es nichts angeht. Covered-Call-Erträge sind steuerpflichtig; private Bitcoin-Gewinne sind steuerfrei. Diese Seite ist keine Finanz- oder Steuerberatung: Sie ist Arithmetik. Bitcoin ist volatil: Investiere nur, was du um 50% fallen sehen kannst, ohne zu verkaufen.',
@@ -374,20 +458,26 @@ fr:{
  'curve.note':"// Le 3e pilier est plafonné à CHF 7'258/an (CHF 604.8/mois) : l'excédent sort de toute façon. La courbe inclut un scénario de drawdown de -50% sur les 3 premières années.",
  'calc.amt':'Coût mensuel sur la fiche de paie','calc.btc':'Rendement annuel du Bitcoin','calc.yrs':'Horizon','calc.tax':'Votre taux marginal',
  'calc.res3a':'3e pilier, taxé au retrait','calc.resB':'Pilastro B, exonéré',
- 'how.tag':'02 — Comment ça marche','how.h2':"Quatre étapes. Ensuite, vous n'y pensez plus.",
+ 'sim.tag':'02 — La preuve','sim.h2':"Et si vous aviez commencé plus tôt ?","sim.lede":"Simulation sur <strong>données historiques réelles</strong> : que vaudrait aujourd'hui un plan d'accumulation mensuel lancé il y a des années. La volatilité n'est pas l'ennemie du plan : c'est son moteur.",
+ 'sim.amt':'Montant mensuel (CHF)','sim.start':"Il y a (années)","sim.sats":'Bitcoin accumulés','sim.val':"Valeur aujourd'hui","sim.inv":'Total versé','sim.pl':'Résultat',
+ 'why.c1t':"La moyenne bat le timing",'why.c1p':"Acheter à intervalles fixes lisse le prix dans le temps. Pas besoin du moment parfait : il faut le rythme.",
+ 'why.c2t':'La volatilité travaille pour vous','why.c2p':"Avec des montants fixes, vous achetez plus de Bitcoin quand le prix baisse. Les replis deviennent des rabais.",
+ 'why.c3t':'Zéro stress du graphique','why.c3p':"Pas d'app à vérifier chaque jour. Le plan tourne, vous vivez. Le stack grandit en arrière-plan.",
+ 'faq.tag':'04 — Questions','faq.h2':'Ce que tout le monde demande.',
+ 'how.tag':'03 — Comment ça marche','how.h2':"Quatre étapes. Ensuite, vous n'y pensez plus.",
  'how.s1n':'ÉTAPE 01','how.s1t':"Le salaire alimente le stack",'how.s1p':"Fixez le montant une fois. Chaque mois, le même jour, nous achetons du Bitcoin. <strong>Zéro timing, zéro décision émotionnelle.</strong>",
  'how.s2n':'ÉTAPE 02','how.s2t':'Confidentialité by design','how.s2p':"Sous CHF 1'000 par mois, la loi suisse ne nous oblige pas à vous identifier. <strong>Aucune donnée partagée avec des plateformes tierces</strong>, aucun dossier sur vous.",
  'how.s3n':'ÉTAPE 03','how.s3t':'Direct en self-custody','how.s3p':"Les Bitcoin arrivent sur <strong>votre</strong> adresse. Nous vous aidons à configurer le wallet une fois. Ensuite, les clés restent vôtres pour toujours.",
  'how.s4n':'ÉTAPE 04 — OPTIONNEL','how.s4t':'Rendement avec covered calls','how.s4p':"Sur 20% du stack, activez des covered calls aux strikes éloignés. <strong>Vous encaissez des primes, vous ne vendez pas la thèse.</strong> Le rendement est imposable : nous préparons le rapport fiscal.",
- 'priv.tag':'03 — Confidentialité','priv.h3':"Vos données n'existent pas. Personne ne peut les perdre.",
+ 'priv.tag':'05 — Confidentialité','priv.h3':"Vos données n'existent pas. Personne ne peut les perdre.",
  'priv.p':"Chaque plateforme centralisée est une archive de vos achats, adresses et documents. Pilastro B est construit pour n'avoir rien à archiver : sous CHF 1'000 par mois, <strong>nous ne collectons aucun document, ne profilons pas, n'avons rien à partager</strong>. Pas une astuce fiscale : vos impôts, vous les déclarez comme toujours. C'est de l'hygiène des données.",
  'priv.b1':'Aucun document téléchargé','priv.b2':'Aucune donnée vendue ou partagée','priv.b3':'Conforme au droit suisse',
- 'cust.tag':'04 — Conservation','cust.h2':'Les clés sont le produit.',
+ 'cust.tag':'06 — Conservation','cust.h2':'Les clés sont le produit.',
  'cust.c1tag':'Par défaut','cust.c1t':'Self-custody assistée',
  'cust.c1l1':'Configuration guidée de votre hardware wallet, une seule fois','cust.c1l2':'Achats envoyés directement à votre adresse','cust.c1l3':'Nous ne détenons jamais vos Bitcoin. Jamais.','cust.c1l4':'Plan de succession documenté pour votre famille',
  'cust.c2tag':'Pour les covered calls','cust.c2t':'Sleeve opérationnelle ségréguée',
  'cust.c2l1':"Seulement 20% du stack, seulement si vous l'activez",'cust.c2l2':'Compte ségrégué à votre nom chez une contrepartie suisse réglementée','cust.c2l3':'Strikes éloignés, échéances courtes, rapport fiscal mensuel','cust.c2l4':'Désactivation à tout moment, retour en self-custody',
- 'fin.tag':'05 — Lancement','fin.h2':"Le 3e pilier attend vos 60 ans. Pas vous.",
+ 'fin.tag':'07 — Lancement','fin.h2':"Le 3e pilier attend vos 60 ans. Pas vous.",
  'fin.lede':"Nous ouvrons les 500 premières places début 2027, Tessin d'abord, puis toute la Suisse. Laissez votre email : la place est à vous.",
  'fin.ph':'votre@email.ch','fin.btn':"JE M'INSCRIS",'fin.done':"// Reçu. On vous écrit à l'ouverture.",'fin.note':"Pas de spam. Un mail à l'ouverture, un si la loi change.",
  'foot.disc':"Pilastro B déclare tout à la loi suisse et rien aux tiers qui ne sont pas concernés. Le rendement des covered calls est imposable ; les plus-values privées sur Bitcoin sont exonérées. Cette page n'est pas un conseil financier ou fiscal : c'est de l'arithmétique. Bitcoin est volatil : n'investissez que ce que vous pouvez voir baisser de 50% sans vendre.",
@@ -408,20 +498,26 @@ en:{
  'curve.note':"// Pillar 3a is capped at CHF 7'258/year (CHF 604.8/month): the excess goes outside anyway. The curve includes a -50% drawdown scenario in the first 3 years.",
  'calc.amt':'Monthly cost on your payslip','calc.btc':'Bitcoin annual return','calc.yrs':'Horizon','calc.tax':'Your marginal tax rate',
  'calc.res3a':'Pillar 3a, taxed at withdrawal','calc.resB':'Pilastro B, tax-free',
- 'how.tag':'02 — How it works','how.h2':'Four steps. Then forget about it.',
+ 'sim.tag':'02 — The proof','sim.h2':'What if you had started earlier?','sim.lede':"Simulation on <strong>real historical data</strong>: what a monthly stacking plan started years ago would be worth today. Volatility is not the plan's enemy: it is its engine.",
+ 'sim.amt':'Monthly amount (CHF)','sim.start':'Years ago','sim.sats':'Bitcoin stacked','sim.val':'Value today','sim.inv':'Total paid in','sim.pl':'Result',
+ 'why.c1t':'Averaging beats timing','why.c1p':'Buying at fixed intervals averages your price over time. No perfect moment needed: rhythm is enough.',
+ 'why.c2t':'Volatility works for you','why.c2p':'Fixed amounts buy more Bitcoin when price dips and less when it rips. Drawdowns become discounts.',
+ 'why.c3t':'Zero chart stress','why.c3p':'No app to check daily. The plan runs, you live. The stack grows in the background.',
+ 'faq.tag':'04 — Questions','faq.h2':'What everyone asks.',
+ 'how.tag':'03 — How it works','how.h2':'Four steps. Then forget about it.',
  'how.s1n':'STEP 01','how.s1t':'Your salary feeds the stack','how.s1p':"Set the amount once. Every month, same day, we buy Bitcoin. <strong>No timing, no emotional decisions.</strong>",
  'how.s2n':'STEP 02','how.s2t':'Privacy by design','how.s2p':"Under CHF 1'000 a month, Swiss law doesn't require us to identify you. <strong>No data shared with third-party exchanges</strong>, no file on you.",
  'how.s3n':'STEP 03','how.s3t':'Straight to self-custody','how.s3p':"Bitcoin lands on <strong>your</strong> address. We help you set up the wallet once. After that, the keys stay yours forever.",
  'how.s4n':'STEP 04 — OPTIONAL','how.s4t':'Yield with covered calls','how.s4p':"On 20% of the stack you can enable covered calls with distant strikes. <strong>You collect premiums, you don't sell the thesis.</strong> Yield is taxable income: we prepare the tax report.",
- 'priv.tag':'03 — Privacy','priv.h3':"Your data doesn't exist. Nobody can lose it.",
+ 'priv.tag':'05 — Privacy','priv.h3':"Your data doesn't exist. Nobody can lose it.",
  'priv.p':"Every centralized exchange is an archive of your purchases, addresses and documents. Pilastro B is built to have nothing to archive: under CHF 1'000 a month, <strong>we collect no documents, build no profiles, have nothing to share</strong> with third parties. Not a tax trick: you declare your taxes as always. It's data hygiene.",
  'priv.b1':'No documents uploaded','priv.b2':'No data sold or shared','priv.b3':'Compliant with Swiss law',
- 'cust.tag':'04 — Custody','cust.h2':'The keys are the product.',
+ 'cust.tag':'06 — Custody','cust.h2':'The keys are the product.',
  'cust.c1tag':'Default','cust.c1t':'Assisted self-custody',
  'cust.c1l1':'Guided hardware wallet setup, one time only','cust.c1l2':'Purchases sent straight to your address','cust.c1l3':'We never hold your Bitcoin. Ever.','cust.c1l4':'Documented succession plan for your family',
  'cust.c2tag':'For covered calls','cust.c2t':'Segregated operating sleeve',
  'cust.c2l1':'Only 20% of the stack, only if you enable it','cust.c2l2':'Segregated account in your name with a regulated Swiss counterparty','cust.c2l3':'Distant strikes, short expiries, monthly tax report','cust.c2l4':'Switch off anytime, everything returns to self-custody',
- 'fin.tag':'05 — Launch','fin.h2':"Pillar 3a waits for your 60s. You don't.",
+ 'fin.tag':'07 — Launch','fin.h2':"Pillar 3a waits for your 60s. You don't.",
  'fin.lede':"We open the first 500 seats in early 2027, Ticino first, then all of Switzerland. Leave your email: the seat is yours.",
  'fin.ph':'you@email.ch','fin.btn':'SIGN UP','fin.done':'// Received. We write when we open.','fin.note':'No spam. One email at launch, one if the law changes.',
  'foot.disc':"Pilastro B declares everything to Swiss law and nothing to third parties that don't concern them. Covered call yield is taxable income; private Bitcoin gains are tax-free. This page is not financial or tax advice: it's arithmetic. Bitcoin is volatile: invest only what you can watch drop 50% without selling.",
@@ -437,6 +533,7 @@ function applyLang(){
   document.querySelectorAll('[data-i18n-html]').forEach(el=>el.innerHTML=t(el.dataset.i18nHtml));
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>el.placeholder=t(el.dataset.i18nPh));
   calc();
+  renderFaq();
 }
 function detectLang(){
   const nav=(navigator.language||'it').slice(0,2).toLowerCase();
@@ -539,8 +636,99 @@ function drawChart(amt,btc,yrs,tax,pmt3,spill){
   ctx.fillStyle='#8FC7A0'; ctx.fillText(fmt(s3[yrs]),W-padR,Y(s3[yrs])+18);
 }
 window.addEventListener('resize',calc);
-applyLang();
 
+
+// FAQ
+const FAQ={
+it:[["Cos'è un piano di accumulo Bitcoin?","Un modo automatico di comprare un importo fisso di Bitcoin a intervalli regolari, per esempio ogni mese, invece di tutto in una volta. Si chiama dollar-cost averaging: media il prezzo nel tempo e toglie la pressione del market timing."],
+["Perché non chiedete documenti sotto CHF 1'000?","Perché la legge svizzera non lo richiede sotto quella soglia e noi raccogliamo solo il minimo indispensabile. È una scelta di privacy: niente archivi di documenti, niente dati condivisi con exchange di terze parti. Le tasse le dichiari tu, come sempre."],
+["Dove finiscono i miei Bitcoin?","Sul tuo indirizzo, sotto le tue chiavi. Ti aiutiamo a configurare il wallet la prima volta. Noi non deteniamo mai i fondi dei clienti."],
+["Come funzionano le tasse?","In Svizzera le plusvalenze private su Bitcoin sono esenti. Paghi l'imposta sulla sostanza sul valore e l'eventuale rendita da covered call va dichiarata come reddito. Ti prepariamo il report annuale."],
+["Le covered call sono rischiose?","Vendono il rialzo oltre lo strike: se Bitcoin esplode, quel 20% viene venduto allo strike. Per questo è opzionale, solo sul 20% dello stack, con strike lontani. Il premio è tuo in ogni caso."]],
+de:[["Was ist ein Bitcoin-Sparplan?","Ein automatischer Kauf eines festen Bitcoin-Betrags in regelmässigen Abständen, zum Beispiel monatlich, statt alles auf einmal. Dollar-Cost-Averaging mittelt den Preis und nimmt den Druck des Market Timings."],
+["Warum verlangt ihr unter CHF 1'000 keine Dokumente?","Weil das Schweizer Gesetz es unter dieser Schwelle nicht verlangt und wir nur das Nötigste erheben. Eine Privacy-Entscheidung: keine Dokumentenarchive, keine Daten an Drittbörsen. Deine Steuern deklarierst du wie immer selbst."],
+["Wo landen meine Bitcoin?","Auf deiner Adresse, unter deinen Schlüsseln. Wir helfen beim ersten Wallet-Setup. Wir halten niemals Kundengelder."],
+["Wie funktionieren die Steuern?","In der Schweiz sind private Bitcoin-Gewinne steuerfrei. Du zahlst die Vermögenssteuer auf den Wert, und Covered-Call-Erträge sind als Einkommen zu deklarieren. Wir liefern den Jahresreport."],
+["Sind Covered Calls riskant?","Sie verkaufen das Upside über dem Strike: Explodiert Bitcoin, wird jene 20% zum Strike verkauft. Darum optional, nur auf 20% des Stacks, mit fernen Strikes. Die Prämie gehört dir in jedem Fall."]],
+fr:[["Qu'est-ce qu'un plan d'accumulation Bitcoin ?","Un achat automatique d'un montant fixe de Bitcoin à intervalles réguliers, par exemple chaque mois, au lieu d'un montant unique. Le dollar-cost averaging lisse le prix et retire la pression du timing."],
+["Pourquoi aucun document sous CHF 1'000 ?","Parce que le droit suisse ne l'exige pas sous ce seuil et que nous ne collectons que le strict minimum. Un choix de confidentialité : pas d'archives de documents, aucune donnée partagée avec des plateformes tierces. Vos impôts, vous les déclarez comme toujours."],
+["Où vont mes Bitcoin ?","Sur votre adresse, sous vos clés. Nous vous aidons à configurer le wallet une fois. Nous ne détenons jamais les fonds des clients."],
+["Et les impôts ?","En Suisse, les plus-values privées sur Bitcoin sont exonérées. Vous payez l'impôt sur la fortune, et le rendement des covered calls se déclare comme revenu. Nous préparons le rapport annuel."],
+["Les covered calls sont-elles risquées ?","Elles vendent le potentiel au-delà du strike : si Bitcoin explose, ces 20% sont vendus au strike. C'est pourquoi c'est optionnel, limité à 20% du stack, avec des strikes éloignés. La prime vous revient dans tous les cas."]],
+en:[["What is a Bitcoin stacking plan?","An automatic way to buy a fixed amount of Bitcoin at regular intervals, monthly for example, instead of a lump sum. Dollar-cost averaging smooths your price over time and removes market-timing pressure."],
+["Why no documents under CHF 1'000?","Because Swiss law doesn't require it below that threshold and we only collect the bare minimum. A privacy choice: no document archives, no data shared with third-party exchanges. You declare your taxes as always."],
+["Where do my Bitcoin go?","To your address, under your keys. We help you set up the wallet once. We never hold customer funds."],
+["How do taxes work?","In Switzerland, private Bitcoin gains are tax-free. You pay wealth tax on the value, and covered call yield is declared as income. We prepare the annual report."],
+["Are covered calls risky?","They sell the upside beyond the strike: if Bitcoin rips, that 20% gets sold at the strike. That's why it's optional, capped at 20% of the stack, with distant strikes. The premium is yours either way."]]};
+function renderFaq(){
+  const list=document.getElementById('faqList');
+  list.innerHTML='';
+  FAQ[LANG].forEach(([q,a],i)=>{
+    const d=document.createElement('div'); d.className='faq-item';
+    d.innerHTML='<button class="faq-q">'+q+'</button><div class="faq-a"><p>'+a+'</p></div>';
+    d.querySelector('.faq-q').addEventListener('click',()=>{
+      const open=d.classList.toggle('open');
+      d.querySelector('.faq-a').style.maxHeight=open?d.querySelector('.faq-a').scrollHeight+'px':'0';
+    });
+    list.appendChild(d);
+  });
+}
+
+// live price ticker
+async function ticker(){
+  try{
+    const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=chf&include_24hr_change=true');
+    const j=await r.json(); const b=j.bitcoin;
+    const el=document.getElementById('tick');
+    const up=b.chf_24h_change>=0;
+    el.innerHTML='BTC <b>CHF '+Math.round(b.chf).toLocaleString(LOCALES[LANG])+'</b> <span style="color:'+(up?'var(--sage)':'#D98F6A')+'">'+(up?'+':'-')+' '+Math.abs(b.chf_24h_change).toFixed(1)+'%</span>';
+  }catch(e){}
+}
+ticker(); setInterval(ticker,60000);
+
+// historical DCA simulator (CoinGecko daily prices)
+let priceCache={};
+async function getPrices(days){
+  if(priceCache[days])return priceCache[days];
+  const r=await fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=chf&days='+days+'&interval=daily');
+  const j=await r.json();
+  priceCache[days]=j.prices; return j.prices;
+}
+async function sim(){
+  const amt=+document.getElementById('rSimAmt').value;
+  const yrs=+document.getElementById('rSimStart').value;
+  const loc=LOCALES[LANG];
+  document.getElementById('oSimAmt').textContent='CHF '+amt.toLocaleString(loc);
+  const src=document.getElementById('simSrc');
+  src.textContent='// CoinGecko ...';
+  try{
+    const prices=await getPrices(yrs*365+30);
+    const cutoff=Date.now()-yrs*365*86400000;
+    const p=prices.filter(pt=>pt[0]>=cutoff);
+    if(p.length<30)throw 0;
+    const monthMs=30.44*86400000;
+    let sats=0, inv=0, next=p[0][0];
+    for(const pt of p){ const ts=pt[0], price=pt[1];
+      if(ts>=next){ sats+=amt/price; inv+=amt; next=ts+monthMs; }
+    }
+    const last=p[p.length-1][1];
+    const val=sats*last, pl=val-inv;
+    document.getElementById('simSats').textContent=sats.toFixed(4)+' BTC';
+    document.getElementById('simVal').textContent='CHF '+Math.round(val).toLocaleString(loc);
+    document.getElementById('simInv').textContent='CHF '+Math.round(inv).toLocaleString(loc);
+    const el=document.getElementById('simPL');
+    el.textContent=(pl>=0?'+':'-')+' CHF '+Math.abs(Math.round(pl)).toLocaleString(loc);
+    el.className='n '+(pl>=0?'up':'dn');
+    src.textContent='// '+({it:'Prezzi giornalieri CoinGecko. Simulazione a scopo informativo, non consulenza né garanzia di rendimento.',de:'Taegliche CoinGecko-Kurse. Nur zu Informationszwecken, keine Beratung, keine Renditegarantie.',fr:'Prix quotidiens CoinGecko. Simulation informative, ni conseil ni garantie de rendement.',en:'Daily CoinGecko prices. Simulation for information only, not advice or a performance guarantee.'})[LANG];
+  }catch(e){
+    src.textContent='// CoinGecko offline';
+  }
+}
+document.getElementById('rSimAmt').addEventListener('input',sim);
+document.getElementById('rSimStart').addEventListener('input',sim);
+sim();
+
+applyLang();
 document.getElementById('wlForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('wlForm').style.display='none';document.getElementById('wlDone').style.display='block';});
 </script>
 </body>
