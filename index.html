@@ -10,24 +10,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#16140F; --panel:#1F1C15; --panel2:#26221A; --line:#37311F; --line2:#47402B;
-  --ink:#FAF6EC; --body:#CFC8B4; --muted:#978D75; --dim:#6B6450;
-  --amber:#F7931A; --amber-soft:#FFB84D; --amber-dim:rgba(247,147,26,.14);
-  --sage:#8FC7A0; --sage-dim:rgba(143,199,160,.12);
+  --bg:#F7F3EA; --panel:#FFFDF7; --panel2:#FBF6EC; --line:#E7DFCC; --line2:#D9CFB6;
+  --ink:#2C2514; --body:#5D5542; --muted:#8C8268; --dim:#AAA084;
+  --amber:#D97A08; --amber-soft:#EBA94B; --amber-dim:rgba(217,122,8,.10);
+  --sage:#3F7D5A; --sage-dim:rgba(63,125,90,.10);
   --mono:'Space Mono',monospace; --serif:'Lora',serif; --sans:'Inter',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--body);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;
-  background:radial-gradient(900px 500px at 80% -10%,rgba(247,147,26,.09),transparent 60%),
-             radial-gradient(700px 500px at 10% 30%,rgba(143,199,160,.05),transparent 60%)}
-::selection{background:var(--amber);color:#16140F}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:radial-gradient(900px 500px at 85% -10%,rgba(235,169,75,.22),transparent 60%),
+             radial-gradient(700px 500px at 5% 30%,rgba(63,125,90,.14),transparent 60%),
+             var(--bg)}
+::selection{background:var(--amber);color:#FFF8EC}
 a{color:inherit;text-decoration:none}
 .wrap{width:min(1080px,calc(100% - 48px));margin-inline:auto;position:relative}
 
 /* NAV */
-nav{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(22,20,15,.9);backdrop-filter:blur(10px);z-index:50}
+nav{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(247,243,234,.88);backdrop-filter:blur(10px);z-index:50}
 nav .wrap{display:flex;align-items:center;gap:26px;height:64px}
 .logo{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--ink);letter-spacing:-.02em}
 .logo b{color:var(--amber)}
@@ -37,7 +38,7 @@ nav .wrap{display:flex;align-items:center;gap:26px;height:64px}
 .langsel select{appearance:none;background:var(--panel);border:1px solid var(--line2);color:var(--ink);font-family:var(--mono);font-size:12px;font-weight:700;padding:8px 30px 8px 14px;border-radius:7px;cursor:pointer;letter-spacing:.05em}
 .langsel::after{content:"▾";position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--amber);font-size:11px;pointer-events:none}
 .langsel select:hover,.langsel select:focus{border-color:var(--amber);outline:none}
-.nav-cta{font-family:var(--mono);font-size:11.5px;font-weight:700;color:#16140F;background:linear-gradient(135deg,var(--amber),var(--amber-soft));padding:9px 16px;border-radius:7px;letter-spacing:.04em;white-space:nowrap}
+.nav-cta{font-family:var(--mono);font-size:11.5px;font-weight:700;color:#FFF8EC;background:linear-gradient(135deg,var(--amber),var(--amber-soft));padding:9px 16px;border-radius:7px;letter-spacing:.04em;white-space:nowrap}
 .nav-cta:hover{filter:brightness(1.1)}
 @media(max-width:820px){.nav-links{display:none}}
 
@@ -48,7 +49,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,6.6vw,72px);lin
 h1 em{font-style:italic;color:var(--amber)}
 .lede{margin-top:28px;max-width:560px;font-size:17px;line-height:1.6}
 .lede strong{color:var(--ink)}
-.hero-stats{display:flex;margin-top:52px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:linear-gradient(180deg,var(--panel2),var(--panel))}
+.hero-stats{display:flex;margin-top:52px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--panel2));box-shadow:0 10px 30px rgba(90,70,30,.06)}
 .hstat{flex:1;padding:24px 26px;border-right:1px solid var(--line)}
 .hstat:last-child{border-right:none}
 .hstat .n{font-family:var(--mono);font-weight:700;font-size:clamp(21px,2.8vw,30px);color:var(--ink)}
@@ -59,7 +60,7 @@ h1 em{font-style:italic;color:var(--amber)}
 .cta-row{display:flex;gap:14px;margin-top:42px;flex-wrap:wrap}
 .btn{font-family:var(--mono);font-size:13px;font-weight:700;padding:15px 26px;border-radius:8px;letter-spacing:.03em;display:inline-block;transition:transform .15s ease}
 .btn:hover{transform:translateY(-2px)}
-.btn-p{background:linear-gradient(135deg,var(--amber),var(--amber-soft));color:#16140F;box-shadow:0 6px 24px rgba(247,147,26,.25)}
+.btn-p{background:linear-gradient(135deg,var(--amber),var(--amber-soft));color:#FFF8EC;box-shadow:0 6px 22px rgba(217,122,8,.28)}
 .btn-s{border:1px solid var(--line2);color:var(--ink)}
 .btn-s:hover{border-color:var(--amber);color:var(--amber)}
 
@@ -71,21 +72,21 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,42px);line-
 .sec-lede strong{color:var(--ink)}
 
 /* CHART + CALC */
-.chartbox{margin-top:44px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,var(--panel2),var(--panel));padding:30px 26px 20px}
+.chartbox{margin-top:44px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,var(--panel),var(--panel2));box-shadow:0 10px 30px rgba(90,70,30,.05);padding:30px 26px 20px}
 canvas{width:100%;height:auto;display:block}
 .chart-legend{display:flex;gap:26px;padding:16px 4px 4px;font-size:12px;font-family:var(--mono);color:var(--muted);flex-wrap:wrap}
 .chart-legend i{display:inline-block;width:22px;height:3px;border-radius:2px;vertical-align:middle;margin-right:8px}
 .calc{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
 @media(max-width:860px){.calc{grid-template-columns:1fr}}
 .calc-in{padding:32px;border-right:1px solid var(--line)}
-.calc-out{padding:32px;background:linear-gradient(180deg,rgba(247,147,26,.06),transparent);display:flex;flex-direction:column;gap:20px;justify-content:center}
+.calc-out{padding:32px;background:linear-gradient(180deg,rgba(217,122,8,.07),transparent);display:flex;flex-direction:column;gap:20px;justify-content:center}
 @media(max-width:860px){.calc-in{border-right:none;border-bottom:1px solid var(--line)}}
 .slider-block{margin-bottom:24px}
 .slider-block:last-child{margin-bottom:0}
 .slider-block label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:10px}
 .slider-block label output{font-family:var(--mono);color:var(--ink);font-weight:700}
 input[type=range]{width:100%;-webkit-appearance:none;height:3px;background:var(--line2);border-radius:2px;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--amber);cursor:pointer;border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--amber);cursor:pointer;border:3px solid #FFFDF7;box-shadow:0 0 0 1px var(--amber)}
 .result-row{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:13px}
 .result-row .rl{font-size:13px;color:var(--muted);max-width:55%}
 .result-row .rv{font-family:var(--mono);font-weight:700;font-size:22px;color:var(--sage)}
@@ -134,7 +135,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .sim-cell{padding:24px 26px;border-right:1px solid var(--line)}
 .sim-cell:last-child{border-right:none}
 .sim-cell .n{font-family:var(--mono);font-weight:700;font-size:clamp(17px,2vw,23px);color:var(--ink)}
-.sim-cell .n.up{color:var(--sage)} .sim-cell .n.dn{color:#D98F6A}
+.sim-cell .n.up{color:var(--sage)} .sim-cell .n.dn{color:#C25B3A}
 .sim-cell .l{font-size:11.5px;color:var(--muted);margin-top:6px}
 @media(max-width:760px){.sim-grid{grid-template-columns:1fr 1fr}.sim-cell{border-bottom:1px solid var(--line)}}
 .sim-src{font-size:11px;color:var(--dim);font-family:var(--mono);padding:12px 32px;border-top:1px solid var(--line)}
@@ -158,7 +159,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .waitlist{margin:38px auto 0;display:flex;max-width:460px;border:1px solid var(--line2);border-radius:9px;overflow:hidden;background:var(--panel)}
 .waitlist input{flex:1;background:transparent;border:none;outline:none;color:var(--ink);font-family:var(--mono);font-size:13px;padding:16px 18px;min-width:0}
 .waitlist input::placeholder{color:var(--dim)}
-.waitlist button{background:linear-gradient(135deg,var(--amber),var(--amber-soft));color:#16140F;border:none;font-family:var(--mono);font-weight:700;font-size:13px;padding:0 22px;cursor:pointer;white-space:nowrap}
+.waitlist button{background:linear-gradient(135deg,var(--amber),var(--amber-soft));color:#FFF8EC;border:none;font-family:var(--mono);font-weight:700;font-size:13px;padding:0 22px;cursor:pointer;white-space:nowrap}
 .wl-done{display:none;font-family:var(--mono);font-size:13px;color:var(--sage);margin-top:16px}
 .wl-note{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:16px}
 
@@ -187,7 +188,6 @@ footer .disc{max-width:640px;line-height:1.7}
         <option value="it">IT</option>
         <option value="de">DE</option>
         <option value="fr">FR</option>
-        <option value="en">EN</option>
       </select>
     </div>
     <a class="nav-cta" href="#iscriviti" data-i18n="nav.cta"></a>
@@ -485,7 +485,7 @@ fr:{
 },};
 
 let LANG='it';
-const LOCALES={it:'it-CH',de:'de-CH',fr:'fr-CH',en:'en-CH'};
+const LOCALES={it:'it-CH',de:'de-CH',fr:'fr-CH'};
 function t(k){return I18N[LANG][k]??I18N.it[k]??k;}
 function applyLang(){
   document.documentElement.lang=LANG;
@@ -497,7 +497,7 @@ function applyLang(){
 }
 function detectLang(){
   const nav=(navigator.language||'it').slice(0,2).toLowerCase();
-  return I18N[nav]?nav:'en';
+  return I18N[nav]?nav:'it';
 }
 const langSel=document.getElementById('lang');
 langSel.addEventListener('change',e=>{LANG=e.target.value;applyLang();});
@@ -535,15 +535,14 @@ function calc(){
   const loc=LOCALES[LANG];
   document.getElementById('oAmt').textContent='CHF '+amt.toLocaleString(loc);
   document.getElementById('oBtc').textContent=document.getElementById('rBtc').value+'%';
-  document.getElementById('oYrs').textContent=yrs+(LANG==='de'?' Jahre':LANG==='fr'?' ans':LANG==='en'?' years':' anni');
+  document.getElementById('oYrs').textContent=yrs+(LANG==='de'?' Jahre':LANG==='fr'?' ans':' anni');
   document.getElementById('oTax').textContent=document.getElementById('rTax').value+'%';
   document.getElementById('res3a').textContent=fmt(v3total);
   document.getElementById('resBtc').textContent=fmt(vB);
   const diff=vB-v3total;
   const V={it:[d=>`Pilastro B vince di ${fmt(d)}. Il 3a ti costa quella cifra.`,()=>'A questi rendimenti il 3a regge. Il tuo toro non è abbastanza toro.'],
     de:[d=>`Pilastro B gewinnt mit ${fmt(d)}. Die 3a kostet dich diesen Betrag.`,()=>'Bei diesen Renditen hält die 3a. Dein Bulle ist nicht bullish genug.'],
-    fr:[d=>`Pilastro B gagne de ${fmt(d)}. Le 3e pilier vous coûte cette somme.`,()=>'À ces rendements, le 3e pilier tient. Votre taureau n\'est pas assez taureau.'],
-    en:[d=>`Pilastro B wins by ${fmt(d)}. Pillar 3a costs you that much.`,()=>'At these returns, 3a holds. Your bull is not bullish enough.']}[LANG];
+    fr:[d=>`Pilastro B gagne de ${fmt(d)}. Le 3e pilier vous coûte cette somme.`,()=>'À ces rendements, le 3e pilier tient. Votre taureau n\'est pas assez taureau.']}[LANG];
   document.getElementById('resVerdict').textContent=diff>0?V[0](diff):V[1]();
   drawChart(amt,btc,yrs,tax,pmt3,spill);
 }
@@ -565,7 +564,7 @@ function drawChart(amt,btc,yrs,tax,pmt3,spill){
   const Y=v=>H-padB-(H-padT-padB)*(v/max);
   const mono="11px 'Space Mono'";
   // grid
-  ctx.font=mono; ctx.fillStyle='#6B6450'; ctx.strokeStyle='#2B2718'; ctx.lineWidth=1;
+  ctx.font=mono; ctx.fillStyle='#8C8268'; ctx.strokeStyle='#E7DFCC'; ctx.lineWidth=1;
   const steps=4;
   for(let g=0;g<=steps;g++){
     const v=max/steps*g, y=Y(v);
@@ -577,23 +576,23 @@ function drawChart(amt,btc,yrs,tax,pmt3,spill){
   const tickEvery=yrs>15?5:yrs>8?2:1;
   for(let y=0;y<=yrs;y+=tickEvery)ctx.fillText('Y'+y,X(y),H-12);
   // drawdown band (dashed, dim)
-  ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(247,147,26,.35)'; ctx.lineWidth=1.5;
+  ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(217,122,8,.4)'; ctx.lineWidth=1.5;
   ctx.beginPath(); sBdd.forEach((v,y)=>y?ctx.lineTo(X(y),Y(v)):ctx.moveTo(X(0),Y(v))); ctx.stroke();
   ctx.setLineDash([]);
   // 3a
-  ctx.strokeStyle='#8FC7A0'; ctx.lineWidth=2.5;
+  ctx.strokeStyle='#3F7D5A'; ctx.lineWidth=2.5;
   ctx.beginPath(); s3.forEach((v,y)=>y?ctx.lineTo(X(y),Y(v)):ctx.moveTo(X(0),Y(v))); ctx.stroke();
   // BTC + gradient fill
   const grad=ctx.createLinearGradient(0,padT,0,H-padB);
-  grad.addColorStop(0,'rgba(247,147,26,.25)'); grad.addColorStop(1,'rgba(247,147,26,0)');
+  grad.addColorStop(0,'rgba(217,122,8,.20)'); grad.addColorStop(1,'rgba(217,122,8,0)');
   ctx.beginPath(); sB.forEach((v,y)=>y?ctx.lineTo(X(y),Y(v)):ctx.moveTo(X(0),Y(v)));
   ctx.lineTo(X(yrs),Y(0)); ctx.lineTo(X(0),Y(0)); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
   ctx.beginPath(); sB.forEach((v,y)=>y?ctx.lineTo(X(y),Y(v)):ctx.moveTo(X(0),Y(v)));
-  ctx.strokeStyle='#F7931A'; ctx.lineWidth=3; ctx.stroke();
+  ctx.strokeStyle='#D97A08'; ctx.lineWidth=3; ctx.stroke();
   // end labels
   ctx.font="bold 12px 'Space Mono'"; ctx.textAlign='right';
-  ctx.fillStyle='#F7931A'; ctx.fillText(fmt(sB[yrs]),W-padR,Y(sB[yrs])-10);
-  ctx.fillStyle='#8FC7A0'; ctx.fillText(fmt(s3[yrs]),W-padR,Y(s3[yrs])+18);
+  ctx.fillStyle='#D97A08'; ctx.fillText(fmt(sB[yrs]),W-padR,Y(sB[yrs])-10);
+  ctx.fillStyle='#3F7D5A'; ctx.fillText(fmt(s3[yrs]),W-padR,Y(s3[yrs])+18);
 }
 window.addEventListener('resize',calc);
 
@@ -636,7 +635,7 @@ async function ticker(){
     const j=await r.json(); const b=j.bitcoin;
     const el=document.getElementById('tick');
     const up=b.chf_24h_change>=0;
-    el.innerHTML='BTC <b>CHF '+Math.round(b.chf).toLocaleString(LOCALES[LANG])+'</b> <span style="color:'+(up?'var(--sage)':'#D98F6A')+'">'+(up?'+':'-')+' '+Math.abs(b.chf_24h_change).toFixed(1)+'%</span>';
+    el.innerHTML='BTC <b>CHF '+Math.round(b.chf).toLocaleString(LOCALES[LANG])+'</b> <span style="color:'+(up?'var(--sage)':'#C25B3A')+'">'+(up?'+':'-')+' '+Math.abs(b.chf_24h_change).toFixed(1)+'%</span>';
   }catch(e){}
 }
 ticker(); setInterval(ticker,60000);
