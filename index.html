@@ -152,6 +152,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--body);font-size:14px}
 .faq-a p{padding:0 0 22px;max-width:680px}
 
+.ybtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.ybtn{font-family:var(--mono);font-size:13px;padding:10px 16px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);color:var(--body);cursor:pointer;transition:all .15s}
+.ybtn:hover{border-color:var(--amber)}
+.ybtn.on{background:var(--amber);border-color:var(--amber);color:#FFF8EC;font-weight:700}
 /* CTA */
 .final{padding:100px 0;text-align:center}
 .final h2{margin-inline:auto}
@@ -264,9 +268,9 @@ footer .disc{max-width:640px;line-height:1.7}
           <label><span data-i18n="sim.amt"></span><output id="oSimAmt"></output></label>
           <input type="range" id="rSimAmt" min="50" max="1000" step="50" value="200">
         </div>
-        <div class="sh-l slider-block" style="margin-bottom:0">
-          <label><span data-i18n="sim.start"></span><output></output></label>
-          <input type="range" id="rSimStart" min="1" max="8" step="1" value="4">
+        <div class="sh-l" style="margin-bottom:0">
+          <label><span data-i18n="sim.start"></span></label>
+          <div class="ybtns" id="yBtns"></div>
         </div>
       </div>
       <div class="sim-grid">
@@ -648,13 +652,27 @@ async function getPrices(days){
   const cutoff=Date.now()-days*86400000;
   return BTCHF.map(m=>[new Date(m[0]+'-02T00:00:00Z').getTime(),m[1]]).filter(pt=>pt[0]>=cutoff-32*86400000);
 }
+const YEARS=[1,2,3,5,8];
+let simYrs=3;
+function yUnit(n){return {it:n===1?' anno':' anni',de:n===1?' Jahr':' Jahre',fr:n===1?' an':' ans'}[LANG];}
+function renderYBtns(){
+  const box=document.getElementById('yBtns'); if(!box)return;
+  box.innerHTML='';
+  YEARS.forEach(y=>{
+    const b=document.createElement('button');
+    b.type='button'; b.className='ybtn'+(y===simYrs?' on':'');
+    b.textContent=y+yUnit(y);
+    b.onclick=()=>{simYrs=y; renderYBtns(); sim();};
+    box.appendChild(b);
+  });
+}
 async function sim(){
   const amt=+document.getElementById('rSimAmt').value;
-  const yrs=+document.getElementById('rSimStart').value;
+  const yrs=simYrs;
   const loc=LOCALES[LANG];
   document.getElementById('oSimAmt').textContent='CHF '+amt.toLocaleString(loc);
   const src=document.getElementById('simSrc');
-  src.textContent='// CoinGecko ...';
+  src.textContent='// …';
   try{
     const prices=await getPrices(yrs*365+30);
     const cutoff=Date.now()-yrs*365*86400000;
@@ -673,13 +691,13 @@ async function sim(){
     const el=document.getElementById('simPL');
     el.textContent=(pl>=0?'+':'-')+' CHF '+Math.abs(Math.round(pl)).toLocaleString(loc);
     el.className='n '+(pl>=0?'up':'dn');
-    src.textContent='// '+({it:'Chiusure mensili BTC/CHF. Simulazione a scopo informativo, non consulenza né garanzia di rendimento.',de:'Taegliche CoinGecko-Kurse. Nur zu Informationszwecken, keine Beratung, keine Renditegarantie.',fr:'Cours mensuels BTC/CHF. Simulation informative, ni conseil ni garantie de rendement.',en:'Daily CoinGecko prices. Simulation for information only, not advice or a performance guarantee.'})[LANG];
+    src.textContent='// '+({it:'Chiusure mensili BTC/CHF. Simulazione a scopo informativo, non consulenza né garanzia di rendimento.',de:'Monatliche BTC/CHF-Schlusskurse. Nur zu Informationszwecken, keine Beratung, keine Renditegarantie.',fr:'Cours mensuels BTC/CHF. Simulation informative, ni conseil ni garantie de rendement.'})[LANG];
   }catch(e){
-    src.textContent='// CoinGecko offline';
+    src.textContent='// dati non disponibili';
   }
 }
 document.getElementById('rSimAmt').addEventListener('input',sim);
-document.getElementById('rSimStart').addEventListener('input',sim);
+renderYBtns();
 sim();
 
 applyLang();
