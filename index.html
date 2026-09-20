@@ -631,38 +631,22 @@ function renderFaq(){
 // live price ticker
 async function ticker(){
   try{
-    const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=chf&include_24hr_change=true');
-    const j=await r.json(); const b=j.bitcoin;
+    const r=await fetch('https://api.kraken.com/0/public/Ticker?pair=XBTCHF');
+    const j=await r.json(); const t=j.result.XBTCHF;
     const el=document.getElementById('tick');
-    const up=b.chf_24h_change>=0;
-    el.innerHTML='BTC <b>CHF '+Math.round(b.chf).toLocaleString(LOCALES[LANG])+'</b> <span style="color:'+(up?'var(--sage)':'#C25B3A')+'">'+(up?'+':'-')+' '+Math.abs(b.chf_24h_change).toFixed(1)+'%</span>';
+    const last=parseFloat(t.c[0]), open=parseFloat(t.o);
+    const chg=(last-open)/open*100, up=chg>=0;
+    el.innerHTML='BTC <b>CHF '+Math.round(last).toLocaleString(LOCALES[LANG])+'</b> <span style="color:'+(up?'var(--sage)':'#C25B3A')+'">'+(up?'+':'-')+' '+Math.abs(chg).toFixed(1)+'%</span>';
   }catch(e){}
 }
 ticker(); setInterval(ticker,60000);
 
 // historical DCA simulator (CoinGecko daily prices)
-let priceCache={};
+// Monthly BTC/CHF closes, embedded: zero network, zero CORS. BTC/USD monthly x USD/CHF (ECB).
+const BTCHF=[["2017-08",4559],["2017-09",4192],["2017-10",6265],["2017-11",9931],["2017-12",13535],["2018-01",9975],["2018-02",9606],["2018-03",6554],["2018-04",8840],["2018-05",7455],["2018-06",6316],["2018-07",7681],["2018-08",6950],["2018-09",6428],["2018-10",6263],["2018-11",4052],["2018-12",3827],["2019-01",3455],["2019-02",3869],["2019-03",4160],["2019-04",5572],["2019-05",8691],["2019-06",10787],["2019-07",9903],["2019-08",9581],["2019-09",8260],["2019-10",9192],["2019-11",7514],["2019-12",7190],["2020-01",9093],["2020-02",8257],["2020-03",6158],["2020-04",8338],["2020-05",9111],["2020-06",8797],["2020-07",10762],["2020-08",10733],["2020-09",9785],["2020-10",12656],["2020-11",18079],["2020-12",26201],["2021-01",29136],["2021-02",40547],["2021-03",53728],["2021-04",54456],["2021-05",34098],["2021-06",31509],["2021-07",38304],["2021-08",42694],["2021-09",40225],["2021-10",57053],["2021-11",51967],["2021-12",42595],["2022-01",35167],["2022-02",39802],["2022-03",41803],["2022-04",34815],["2022-05",30967],["2022-06",19186],["2022-07",22405],["2022-08",19046],["2022-09",19038],["2022-10",20286],["2022-11",17061],["2022-12",15635],["2023-01",21381],["2023-02",21200],["2023-03",26630],["2023-04",26775],["2023-05",24430],["2023-06",27749],["2023-07",26321],["2023-08",22748],["2023-09",23820],["2023-10",31719],["2023-11",34269],["2023-12",37091],["2024-01",36176],["2024-02",52787],["2024-03",63274],["2024-04",55267],["2024-05",61650],["2024-06",56663],["2024-07",58363],["2024-08",51907],["2024-09",54023],["2024-10",59570],["2024-11",83578],["2024-12",83131],["2025-01",93038],["2025-02",77395],["2025-03",74481],["2025-04",83224],["2025-05",86206],["2025-06",87685],["2025-07",91558],["2025-08",88531],["2025-09",91323],["2025-10",87723],["2025-11",73012],["2025-12",70222],["2026-01",62499],["2026-02",52084],["2026-03",53191],["2026-04",60465],["2026-05",57807],["2026-06",45956],["2026-07",51024],["2026-08",63523],["2026-09",65704]];
 async function getPrices(days){
-  if(priceCache[days])return priceCache[days];
-  let prices=null;
-  try{
-    const r=await fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=chf&days='+days+'&interval=daily');
-    if(r.ok){ const j=await r.json(); if(j.prices&&j.prices.length)prices=j.prices; }
-  }catch(e){}
-  if(!prices){
-    // fallback: Kraken XBTCHF daily OHLC (no key)
-    prices=[]; let since=Math.floor(Date.now()/1000)-days*86400;
-    for(let k=0;k<5;k++){
-      const r=await fetch('https://api.kraken.com/0/public/OHLC?pair=XBTCHF&interval=1440&since='+since);
-      const j=await r.json();
-      const arr=j.result&&j.result.XBTCHF; if(!arr||!arr.length)break;
-      for(const c of arr)prices.push([c[0]*1000,parseFloat(c[4])]);
-      since=arr[arr.length-1][0]+86400;
-      if(arr.length<700)break;
-    }
-    if(!prices.length)throw new Error('no prices');
-  }
-  priceCache[days]=prices; return prices;
+  const cutoff=Date.now()-days*86400000;
+  return BTCHF.map(m=>[new Date(m[0]+'-02T00:00:00Z').getTime(),m[1]]).filter(pt=>pt[0]>=cutoff-32*86400000);
 }
 async function sim(){
   const amt=+document.getElementById('rSimAmt').value;
@@ -689,7 +673,7 @@ async function sim(){
     const el=document.getElementById('simPL');
     el.textContent=(pl>=0?'+':'-')+' CHF '+Math.abs(Math.round(pl)).toLocaleString(loc);
     el.className='n '+(pl>=0?'up':'dn');
-    src.textContent='// '+({it:'Prezzi giornalieri CoinGecko. Simulazione a scopo informativo, non consulenza né garanzia di rendimento.',de:'Taegliche CoinGecko-Kurse. Nur zu Informationszwecken, keine Beratung, keine Renditegarantie.',fr:'Prix quotidiens CoinGecko. Simulation informative, ni conseil ni garantie de rendement.',en:'Daily CoinGecko prices. Simulation for information only, not advice or a performance guarantee.'})[LANG];
+    src.textContent='// '+({it:'Chiusure mensili BTC/CHF. Simulazione a scopo informativo, non consulenza né garanzia di rendimento.',de:'Taegliche CoinGecko-Kurse. Nur zu Informationszwecken, keine Beratung, keine Renditegarantie.',fr:'Cours mensuels BTC/CHF. Simulation informative, ni conseil ni garantie de rendement.',en:'Daily CoinGecko prices. Simulation for information only, not advice or a performance guarantee.'})[LANG];
   }catch(e){
     src.textContent='// CoinGecko offline';
   }
